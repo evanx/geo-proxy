@@ -18,7 +18,7 @@ You can `git clone` et al:
 git clone https://github.com/evanx/geo-proxy.git
 cd geo-proxy
 npm install
-npm start
+apiKey=XYZ npm start
 ```
 
 ### Docker
