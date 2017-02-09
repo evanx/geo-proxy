@@ -3,7 +3,7 @@
 
 Redis-based caching proxy for Google Maps API queries.
 
-
+<img src="https://raw.githubusercontent.com/evanx/geo-proxy/master/docs/readme/main.png"/>
 
 ## Use case
 
@@ -20,6 +20,7 @@ cd geo-proxy
 npm install
 apiKey=XYZ npm start
 ```
+where we must provide our `apiKey` for the Google Maps API.
 
 ### Docker
 
@@ -38,6 +39,10 @@ ADD package.json .
 RUN npm install
 ADD lib lib
 CMD ["node", "--harmony", "lib/index.js"]
+```
+
+```
+docker run geo-proxy
 ```
 
 ## Usage
