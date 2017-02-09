@@ -1,0 +1,36 @@
+{
+  "name": "geo-proxy",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint --cache src",
+    "development": "NODE_ENV=development node --harmony lib/index.js",
+    "test": "NODE_ENV=test node --harmony lib/index.js",
+    "tmp": "NODE_ENV=development node --harmony tmp/index.js",
+    "start": "node --harmony lib/index.js",
+    "pm2start-8841": "httpPort=8851 pm2 start lib/index.js --node-args='--harmony' --name `basename $PWD`"
+  },
+  "author": "Evan Summers",
+  "license": "ISC",
+  "dependencies": {
+    "app-spec": "^0.2.0",
+    "bluebird": "^3.4.6",
+    "cli-color": "^1.1.0",
+    "lodash": "^4.17.4",
+    "multi-exec-async": "^0.2.0",
+    "redis": "^2.6.4",
+    "redis-logger-rpf": "^0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evanx/geo-proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evanx/geo-proxy/issues"
+  },
+  "homepage": "https://github.com/evanx/geo-proxy#readme"
+}
