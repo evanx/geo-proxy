@@ -24,15 +24,11 @@ where we must provide our `apiKey` for the Google Maps API.
 
 ### Docker
 
-Alternatively you can build and run via Docker
-```
-## Docker
-
-You can build as follows:
+Alternatively we can build and run via Docker:
 ```
 docker build -t geo-proxy https://github.com/evanx/geo-proxy.git
 ```
-from https://github.com/evanx/geo-proxy/blob/master/Dockerfile
+See https://github.com/evanx/geo-proxy/blob/master/Dockerfile
 ```
 FROM node:7.5.0
 ADD package.json .
