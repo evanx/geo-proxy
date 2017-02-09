@@ -21,6 +21,7 @@
     "koa-router": "^7.0.1",
     "lodash": "^4.17.4",
     "multi-exec-async": "^0.2.0",
+    "node-fetch": "^1.6.3",
     "redis": "^2.6.4",
     "redis-logger-rpf": "^0.2.0"
   },

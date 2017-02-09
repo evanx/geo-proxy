@@ -10,7 +10,7 @@ ls -l tmp/keys.sh
 
 (
   sleep 1
-  curl -X -d '{address: "10 Downing Street, London"}' localhost:8888/maps/api/geocode/json
+  curl -X -d '{address: "10 Downing Street, London"}' http://localhost:8888/maps/api/geocode/json
 ) &
 
 apiKey=$MAPS_API_KEY node --harmony lib/index.js
