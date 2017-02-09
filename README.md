@@ -3,9 +3,42 @@
 
 Redis-based caching proxy for Google Maps API queries.
 
+
+
 ## Use case
 
 We require a local proxy to cache requests to Google Maps API into Redis.
+
+## Installation
+
+### git clone
+
+You can `git clone` et al:
+```
+git clone https://github.com/evanx/geo-proxy.git
+cd geo-proxy
+npm install
+npm start
+```
+
+### Docker
+
+Alternatively you can build and run via Docker
+```
+## Docker
+
+You can build as follows:
+```
+docker build -t geo-proxy https://github.com/evanx/geo-proxy.git
+```
+from https://github.com/evanx/geo-proxy/blob/master/Dockerfile
+```
+FROM node:7.5.0
+ADD package.json .
+RUN npm install
+ADD lib lib
+CMD ["node", "--harmony", "lib/index.js"]
+```
 
 ## Usage
 
@@ -115,28 +148,13 @@ module.exports = async ({config, logger, client, app, api}) => {
 
 Incidently `lib/index.js` uses the `redis-koa-app-rpf` application archetype.
 ```
-require('./redis-koa-app-rpf')(require('./spec'), require('./main'));
+require('redis-koa-app-rpf')(require('./spec'), require('./main'));
 ```
 where we extract the `config` from `process.env` according to the `spec` and invoke our `main` function.
 
-That archetype is embedded in the project, as it is still evolving. Also, you can find it at https://github.com/evanx/redis-koa-app-rpf.
+See https://github.com/evanx/redis-koa-app-rpf.
 
 This provides lifecycle boilerplate to reuse across similar applications.
-
-## Docker
-
-You can build as follows:
-```
-docker build -t geo-proxy https://github.com/evanx/geo-proxy.git
-```
-from https://github.com/evanx/geo-proxy/blob/master/Dockerfile
-```
-FROM node:7.5.0
-ADD package.json .
-RUN npm install
-ADD lib lib
-CMD ["node", "--harmony", "lib/index.js"]
-```
 
 <hr>
 https://twitter.com/@evanxsummers
