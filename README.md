@@ -126,27 +126,34 @@ module.exports = async ({config, logger, client, app, api}) => {
             ctx.body = JSON.stringify(JSON.parse(cachedContent), null, 2);
             return;
         }
+        ...
+    });
+}
+```
+
+If not found in the Redis cache, then we fetch:
+```javascript
         qs.key = config.apiKey;
         const urlQuery = url + '?' + Object.keys(qs)
         .map(key => [key, encodeURIComponent(qs[key])].join('='))
         .join('&');
         const res = await fetch(urlQuery);
         if (res.status !== 200) {
-            console.log('statusCode', url, res.status, res.statusText, qs);
             ctx.statusCode = res.status;
             ctx.body = res.statusText + '\n';
             return;
         }
+```
+
+Naturally we put successfully fetched content into our Redis cache:
+```javascript
         const fetchedContent = await res.text();
         const formattedContent = JSON.stringify(JSON.parse(fetchedContent), null, 2);
         ctx.set('Content-Type', 'application/json');
         ctx.body = formattedContent;
         await multiExecAsync(client, multi => {
             multi.setex(cacheKey, config.expireSeconds, formattedContent);
-            multi.hset([config.redisNamespace, 'req:h'].join(':'), sha, urlQuery);
         });
-    });
-}
 ```
 
 ### Appication archetype
