@@ -11,7 +11,7 @@ We require a local proxy to cache requests to Google Maps API into Redis.
 
 We must provide our `apiKey` for the Google Maps API.
 ```
-evans@eowyn:~/geo-proxy$ apiKey=$MAPS_API_KEY node --harmony lib/index.js
+evans@eowyn:~/geo-proxy$ apiKey=$MAPS_API_KEY npm start
 ```
 where in the above example, it is set in the development environment as `MAPS_API_KEY`
 
@@ -37,6 +37,10 @@ module.exports = {
         redisNamespace: {
             description: 'the Redis namespace',
             default: 'cache-geo-proxy'
+        },
+        expireSeconds: {
+            description: 'the TTL for the cached content',
+            default: 21*24*3600
         },
         httpPort: {
             description: 'the HTTP port',
@@ -76,6 +80,12 @@ You can build as follows:
 docker build -t geo-proxy https://github.com/evanx/geo-proxy.git
 ```
 from https://github.com/evanx/geo-proxy/blob/master/Dockerfile
+```
+FROM node:7.5.0
+ADD package.json .
+RUN npm install
+ADD lib lib
+CMD ["node", "--harmony", "lib/index.js"]```
 
 <hr>
 https://twitter.com/@evanxsummers

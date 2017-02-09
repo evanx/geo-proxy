@@ -1,5 +1,5 @@
 
-set -u -e
+set -u -x
 
 mkdir -p tmp
 
@@ -16,9 +16,8 @@ ls -l tmp/keys.sh
   echo 'client sleep'
   sleep 1
   echo 'client curl'
-  curl -X POST -d '{"address": "20 Falstaff Close, Eynsham OX29 4QA"}' \
-    --header 'Content-Type: application/json' \
-    http://localhost:8888/maps/api/geocode/json
+  curl 'http://localhost:8888/maps/api/geocode/json' -G --data-urlencode 'address=20 Falstaff Close, Eynsham OX29 4QA'
+  redis-cli keys cache-geo-proxy:* 
 ) &
 
 echo 'start server'
