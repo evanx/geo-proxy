@@ -15,6 +15,17 @@ evans@eowyn:~/geo-proxy$ apiKey=$MAPS_API_KEY npm start
 ```
 where in the above example, it is set in the development environment as `MAPS_API_KEY`
 
+We can get JSON content:
+```
+$ redis-cli get cache-geo-proxy:64bdaff72bfc67deb55326022371ffef3ace9c7b:json | jq '.' | grep status
+  "status": "OK",
+```
+Check the TTL:
+```
+$ redis-cli ttl cache-geo-proxy:64bdaff72bfc67deb55326022371ffef3ace9c7b:json
+(integer) 1814352
+```
+
 ## Config spec
 
 See `lib/spec.js` https://github.com/evanx/geo-proxy/blob/master/lib/spec.js
