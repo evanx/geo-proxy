@@ -126,6 +126,7 @@ module.exports = async ({config, logger, client, app, api}) => {
     });
 }
 ```
+where we reset the expiry when hit.
 
 If not found in the Redis cache, then we fetch:
 ```javascript
