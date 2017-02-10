@@ -1,6 +1,6 @@
 {
   "name": "geo-proxy",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "Redis-based caching proxy for Google Maps API queries.",
   "main": "src/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "multi-exec-async": "^0.2.0",
     "node-fetch": "^1.6.3",
     "redis": "^2.6.4",
-    "redis-koa-app-rpf": "^0.2.3",
+    "redis-koa-app-rpf": "^0.2.5",
     "redis-logger-rpf": "^0.2.0"
   },
   "devDependencies": {
