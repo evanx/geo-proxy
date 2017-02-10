@@ -9,6 +9,17 @@ Redis-based caching proxy for Google Maps API queries.
 
 We require a local proxy to cache requests to Google Maps API into Redis.
 
+## Usage
+
+We use the same path and query as per Google Maps API e.g.:
+```
+$ curl 'http://localhost:8888/maps/api/geocode/json' \
+  -G --data-urlencode 'address=Waitrose, Witney, Oxfordshire, UK' |
+  grep formatted | sed 's/^\s*//'
+"formatted_address": "The Woolgate Centre, Woolgate Centre, 25 Market Square, Witney OX28 6AR, UK",  
+```
+where this service is running on port `8888`
+
 ## Installation
 
 ### Docker
@@ -42,15 +53,6 @@ cd geo-proxy
 npm install
 apiKey=$MAPS_API_KEY npm start
 ```
-
-## Usage
-
-We use the same path and query as per Google Maps API e.g.:
-```
-curl 'http://localhost:8888/maps/api/geocode/json' \
-  -G --data-urlencode 'address=10 Downing Street, London'
-```
-where this service is running on port `8888`
 
 ## Redis keys
 
