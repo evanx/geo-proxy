@@ -134,7 +134,7 @@ module.exports = async ({config, logger, client, app, api}) => {
         });
         if (cachedContent) {
             ctx.set('Content-Type', 'application/json');
-            ctx.body = JSON.stringify(JSON.parse(cachedContent), null, 2);
+            ctx.body = JSON.stringify(JSON.parse(cachedContent), null, 2) + '\n';
             return;
         }
         ...
@@ -160,7 +160,7 @@ If not found in the Redis cache, then we fetch:
 Naturally we put successfully fetched content into our Redis cache:
 ```javascript
         const fetchedContent = await res.text();
-        const formattedContent = JSON.stringify(JSON.parse(fetchedContent), null, 2);
+        const formattedContent = JSON.stringify(JSON.parse(fetchedContent), null, 2) + '\n';
         ctx.set('Content-Type', 'application/json');
         ctx.body = formattedContent;
         await multiExecAsync(client, multi => {
