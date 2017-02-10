@@ -145,7 +145,7 @@ where we reset the expiry when hit.
 
 If not found in the Redis cache, then we fetch:
 ```javascript
-        const query = Object.assign({}, ctx.query, {key: config.apiKey});
+        const query = Object.assign({}, {key: config.apiKey}, ctx.query);
         const urlQuery = url + '?' + Object.keys(query)
         .map(key => [key, encodeURIComponent(query[key])].join('='))
         .join('&');
@@ -156,6 +156,7 @@ If not found in the Redis cache, then we fetch:
             return;
         }
 ```
+where we give final preference to any API `{key}` in the `ctx.query` itself, over the `config.apiKey`
 
 Naturally we put successfully fetched content into our Redis cache:
 ```javascript
@@ -183,5 +184,3 @@ This provides lifecycle boilerplate to reuse across similar applications.
 <hr>
 
 https://twitter.com/@evanxsummers
-
-
