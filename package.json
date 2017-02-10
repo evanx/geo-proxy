@@ -24,7 +24,7 @@
     "multi-exec-async": "^0.2.0",
     "node-fetch": "^1.6.3",
     "redis": "^2.6.4",
-    "redis-koa-app-rpf": "^0.2.1",
+    "redis-koa-app-rpf": "^0.2.2",
     "redis-logger-rpf": "^0.2.0"
   },
   "devDependencies": {
