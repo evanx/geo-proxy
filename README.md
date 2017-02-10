@@ -60,6 +60,11 @@ We scan keys:
 ```
 redis-cli --scan --pattern 'cache-geo-proxy:*:json'
 ```
+where we find keys e.g.
+```
+cache-geo-proxy:64bdaff72bfc67deb55326022371ffef3ace9c7b:json
+```
+where keys are named using the SHA of the request path and query.
 
 We can inspect JSON content:
 ```
