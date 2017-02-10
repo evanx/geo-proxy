@@ -11,20 +11,9 @@ We require a local proxy to cache requests to Google Maps API into Redis.
 
 ## Installation
 
-### git clone
-
-You can `git clone` et al:
-```
-git clone https://github.com/evanx/geo-proxy.git
-cd geo-proxy
-npm install
-apiKey=$MAPS_API_KEY npm start
-```
-where we must provide our `apiKey` for the Google Maps API.
-
 ### Docker
 
-Alternatively we can build and run via Docker:
+We can build and run via Docker:
 ```
 docker build -t geo-proxy https://github.com/evanx/geo-proxy.git
 ```
@@ -40,20 +29,42 @@ CMD ["node", "--harmony", "lib/index.js"]
 ```
 docker run --network=host -e apiKey=$MAPS_API_KEY -d geo-proxy
 ```
+where we must provide our `apiKey` for the Google Maps API.
+
+For example, it might be set in the environment as `MAPS_API_KEY`
+
+### git clone
+
+Alternatively you can `git clone` etc:
+```
+git clone https://github.com/evanx/geo-proxy.git
+cd geo-proxy
+npm install
+apiKey=$MAPS_API_KEY npm start
+```
 
 ## Usage
 
-We must provide our `apiKey` for the Google Maps API.
+We use the same path and query as per Google Maps API e.g.:
 ```
-evans@eowyn:~/geo-proxy$ apiKey=$MAPS_API_KEY npm start
+curl 'http://localhost:8888/maps/api/geocode/json' \
+  -G --data-urlencode 'address=10 Downing Street, London'
 ```
-where in the above example, it is set in the development environment as `MAPS_API_KEY`
+where this service is running on port `8888`
 
-We can get JSON content:
+## Redis keys
+
+We scan keys:
+```
+redis-cli --scan --pattern 'cache-geo-proxy:*:json'
+```
+
+We can inspect JSON content:
 ```
 $ redis-cli get cache-geo-proxy:64bdaff72bfc67deb55326022371ffef3ace9c7b:json | jq '.' | grep status
   "status": "OK",
 ```
+
 Check the TTL:
 ```
 $ redis-cli ttl cache-geo-proxy:64bdaff72bfc67deb55326022371ffef3ace9c7b:json
@@ -109,9 +120,7 @@ module.exports = async ({config, logger, client, app, api}) => {
         const path = ctx.params[0];
         const url = 'https://maps.googleapis.com/maps/api/' + path;
         const qs = ctx.query;
-        const sha = crypto.createHash('sha1').update(
-            [url, JSON.stringify(qs)].join('#')
-        ).digest('hex');
+        const sha = crypto.createHash('sha1').update(url).digest('hex');
         const cacheKey = [config.redisNamespace, sha, 'content:json'].join(':');
         const [cachedContent] = await multiExecAsync(client, multi => {
             multi.get(cacheKey);
