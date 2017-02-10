@@ -126,7 +126,6 @@ module.exports = async ({config, logger, client, app, api}) => {
     api.get('/maps/api/*', async ctx => {
         const path = ctx.params[0];
         const url = 'https://maps.googleapis.com/maps/api/' + path;
-        const qs = ctx.query;
         const sha = crypto.createHash('sha1').update(url).digest('hex');
         const cacheKey = [config.redisNamespace, sha, 'content:json'].join(':');
         const [cachedContent] = await multiExecAsync(client, multi => {
@@ -146,9 +145,9 @@ where we reset the expiry when hit.
 
 If not found in the Redis cache, then we fetch:
 ```javascript
-        qs.key = config.apiKey;
-        const urlQuery = url + '?' + Object.keys(qs)
-        .map(key => [key, encodeURIComponent(qs[key])].join('='))
+        const query = Object.assign({}, ctx.query, {key: config.apiKey});
+        const urlQuery = url + '?' + Object.keys(query)
+        .map(key => [key, encodeURIComponent(query[key])].join('='))
         .join('&');
         const res = await fetch(urlQuery);
         if (res.status !== 200) {
