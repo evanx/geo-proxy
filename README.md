@@ -18,7 +18,7 @@ You can `git clone` et al:
 git clone https://github.com/evanx/geo-proxy.git
 cd geo-proxy
 npm install
-apiKey=XYZ npm start
+apiKey=$MAPS_API_KEY npm start
 ```
 where we must provide our `apiKey` for the Google Maps API.
 
@@ -38,7 +38,7 @@ CMD ["node", "--harmony", "lib/index.js"]
 ```
 
 ```
-docker run geo-proxy
+docker run --network=host -e apiKey=$MAPS_API_KEY -d geo-proxy
 ```
 
 ## Usage
