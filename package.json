@@ -4,7 +4,7 @@
   "description": "Redis-based caching proxy for Google Maps API queries.",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint --cache src",
+    "lint": "eslint --cache lib",
     "development": "NODE_ENV=development node --harmony lib/index.js",
     "test": "NODE_ENV=test node --harmony lib/index.js",
     "tmp": "NODE_ENV=development node --harmony tmp/index.js",
