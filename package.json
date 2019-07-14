@@ -10,10 +10,11 @@
   "author": "Evan Summers",
   "license": "ISC",
   "dependencies": {
-    "geo-cache": "^0.4.0"
+    "geo-cache": "^0.4.0",
+    "lodash": "^4.17.14"
   },
   "devDependencies": {
-    "eslint": "^6.0.0"
+    "eslint": "^6.0.1"
   },
   "repository": {
     "type": "git",
